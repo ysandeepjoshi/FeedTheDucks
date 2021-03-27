@@ -29,7 +29,7 @@ export default class EditFeedInfo extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/feeddata/'+this.props.match.params.id)
+        axios.get('https://duck-feed-be.herokuapp.com/feeddata/'+this.props.match.params.id)
         .then(response =>{
             
                 this.setState({
@@ -45,7 +45,7 @@ export default class EditFeedInfo extends Component{
         .catch(function(error){
             console.log(error);
         })
-        axios.get('http://localhost:5000/users')
+        axios.get('https://duck-feed-be.herokuapp.com/users')
         .then(response =>{
             if(response.data.length>0){
                 this.setState({
@@ -107,7 +107,7 @@ export default class EditFeedInfo extends Component{
             foodQuantity : this.state.foodQuantity,
         }
         console.log(FeedInformation);
-        axios.post('http://localhost:5000/feeddata/update/'+this.props.match.params.id,FeedInformation)
+        axios.post('https://duck-feed-be.herokuapp.com/feeddata/update/'+this.props.match.params.id,FeedInformation)
         .then(res => console.log(res.data));
         window.location = '/';
     }

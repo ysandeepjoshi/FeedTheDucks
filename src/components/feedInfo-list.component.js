@@ -33,7 +33,7 @@ export default class FeedInfoList extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/feeddata')
+        axios.get('https://duck-feed-be.herokuapp.com/feeddata')
         .then( response =>{
             this.setState({
                 feedinfo :response.data
@@ -50,7 +50,7 @@ export default class FeedInfoList extends Component{
     }
 
     deleteFeedInfo(id){
-        axios.delete('http://localhost:5000/feeddata/'+id)
+        axios.delete('https://duck-feed-be.herokuapp.com/feeddata/'+id)
         .then( res => {
             console.log(res.data)
         });

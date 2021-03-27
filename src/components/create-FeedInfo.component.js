@@ -29,7 +29,7 @@ export default class CreateFeedInfo extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/users')
+        axios.get('https://duck-feed-be.herokuapp.com/users')
         .then(response =>{
             if(response.data.length>0){
                 this.setState({
@@ -92,7 +92,7 @@ export default class CreateFeedInfo extends Component{
             foodQuantity : this.state.foodQuantity,
         }
         console.log(FeedInformation);
-        axios.post('http://localhost:5000/feeddata/add',FeedInformation)
+        axios.post('https://duck-feed-be.herokuapp.com/feeddata/add',FeedInformation)
         .then(res => console.log(res.data));
         window.location = '/';
     }
