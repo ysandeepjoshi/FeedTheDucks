@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class EditFeedInfo extends Component{
@@ -60,7 +59,7 @@ export default class EditFeedInfo extends Component{
         axios.get('https://duck-feed-be.herokuapp.com/schedules')
         .then(response =>{
             if(response.data.length>0){
-                let filteredSchedule = response.data.filter((d)=>d.username == this.state.username);
+                let filteredSchedule = response.data.filter((d)=>d.username === this.state.username);
                 this.setState({
                     scheduled : filteredSchedule[0].scheduled
                 })
