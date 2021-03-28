@@ -26,6 +26,8 @@ export default class EditFeedInfo extends Component{
         foodQuantity : 0,
         users: [],
         successMessage : '',
+        schedules: [],
+        scheduled: false,
         }
     }
 
@@ -51,6 +53,16 @@ export default class EditFeedInfo extends Component{
             if(response.data.length>0){
                 this.setState({
                     users : response.data.map(user => user.username),
+                })
+            }
+        })
+        
+        axios.get('https://duck-feed-be.herokuapp.com/schedules')
+        .then(response =>{
+            if(response.data.length>0){
+                let filteredSchedule = response.data.filter((d)=>d.username == this.state.username);
+                this.setState({
+                    scheduled : filteredSchedule[0].scheduled
                 })
             }
         })
@@ -206,6 +218,7 @@ export default class EditFeedInfo extends Component{
 
                     <div className="form-group">
                         <input type="submit" value="Update Feed Data" className="btn btn-primary"/>
+                        <input type="button"  value= {this.state.scheduled? "Stop Auto Data Entry":"Automate This"} className="btn btn-primary float-right"/>
 
                     </div>
                       </form>

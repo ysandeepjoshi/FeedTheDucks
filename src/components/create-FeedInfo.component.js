@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import ReactTooltip from 'react-tooltip';
 
 export default class CreateFeedInfo extends Component{
     constructor(props){
@@ -26,6 +27,8 @@ export default class CreateFeedInfo extends Component{
         foodQuantity : 0,
         users: [],
         successMessage: '',
+        schedules: [],
+        scheduled: false,
         }
     }
 
@@ -39,6 +42,16 @@ export default class CreateFeedInfo extends Component{
                 })
             }
         })
+        axios.get('https://duck-feed-be.herokuapp.com/schedules')
+        .then(response =>{
+            if(response.data.length>0){
+                let filteredSchedule = response.data.filter((d)=>d.username == this.state.username);
+                this.setState({
+                    scheduled : filteredSchedule[0].scheduled
+                })
+            }
+        })
+        
     }
 
     onChangeUsername(e){
@@ -191,6 +204,7 @@ export default class CreateFeedInfo extends Component{
 
                     <div className="form-group">
                         <input type="submit" value="Log Feed Data" className="btn btn-primary"/>
+                        <input type="button"  value={this.state.scheduled? "Stop Auto Data Entry":"Automate This"}  className="btn btn-primary float-right"/>
 
                     </div>
                     <div className="form-group">{this.state.successMessage}</div>

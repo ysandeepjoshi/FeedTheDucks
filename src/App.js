@@ -7,6 +7,7 @@ import FeedInfoList from "./components/feedInfo-list.component";
 import EditFeedInfo from "./components/edit-FeedInfo.component";
 import CreateFeedInfo from "./components/create-FeedInfo.component";
 import CreateUser from "./components/create-user.component";
+import DashBoardReporting from "./components/dashboard.components";
 function App(){
 
 return(
@@ -18,6 +19,7 @@ return(
   <Route path="/edit/:id" exact component={EditFeedInfo} />
   <Route path="/create" exact component={CreateFeedInfo} />
   <Route path="/user" exact component={CreateUser} />
+  <Route path="/dashboard" exact component={DashBoardReporting} />
   </div>
   </Router>
 )
