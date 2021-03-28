@@ -9,12 +9,14 @@ export default class CreateUser extends Component{
 
         this.state ={
             username : '',
+            message : '',
         }
     }
 
     onChangeUsername(e){
         this.setState({
-            username : e.target.value
+            username : e.target.value,
+            message : '',
         });
     }
     onSubmit(e){
@@ -25,7 +27,12 @@ export default class CreateUser extends Component{
         }
         console.log(user);
         axios.post('https://duck-feed-be.herokuapp.com/users/add',user)
-        .then(res => console.log(res.data))
+        .then(res => {
+            console.log(res.data)
+            this.setState({
+                message: 'User Created Succefully!'
+            })
+        })
         
         this.setState({
             username: ''
@@ -49,6 +56,8 @@ export default class CreateUser extends Component{
                 <div className="form-group">
                     <input type="submit" value="Create User" className="btn btn-primary"/>
                 </div>
+                
+                <div className="form-group" value={this.state.message} >{this.state.message}</div>
                 </form>
             </div>
         )

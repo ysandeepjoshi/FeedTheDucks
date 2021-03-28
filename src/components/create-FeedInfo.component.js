@@ -24,7 +24,8 @@ export default class CreateFeedInfo extends Component{
         foodCategory : '',
         numberOfDucks : 0,
         foodQuantity : 0,
-        users: []
+        users: [],
+        successMessage: '',
         }
     }
 
@@ -42,40 +43,47 @@ export default class CreateFeedInfo extends Component{
 
     onChangeUsername(e){
         this.setState({
-            username : e.target.value
+            username : e.target.value,
+            successMessage : ''
         });
     }
     onChangefeedTime(date){
         this.setState({
-            feedTime : date
+            feedTime : date,
+            successMessage : ''
         });
     }
     onChangefeedLocation(e){
         this.setState({
-            feedLocation : e.target.value
+            feedLocation : e.target.value,
+            successMessage : ''
         });
     }
     onChangefoodType(e){
         this.setState({
-            foodType : e.target.value
+            foodType : e.target.value,
+            successMessage : ''
         });
     }
     
     onChangefoodCategory(e){
         this.setState({
-            foodCategory : e.target.value
+            foodCategory : e.target.value,
+            successMessage : ''
         });
     }
     
     onChangenumberOfDucks(e){
         this.setState({
-            numberOfDucks : e.target.value
+            numberOfDucks : e.target.value,
+            successMessage : ''
         });
     }
     
     onChangefoodQuantity(e){
         this.setState({
-            foodQuantity : e.target.value
+            foodQuantity : e.target.value,
+            successMessage : ''
         });
     }
 
@@ -93,8 +101,13 @@ export default class CreateFeedInfo extends Component{
         }
         console.log(FeedInformation);
         axios.post('https://duck-feed-be.herokuapp.com/feeddata/add',FeedInformation)
-        .then(res => console.log(res.data));
-        window.location = '/';
+        .then(res => {
+            //console.log(res.data)
+            this.setState({
+                successMessage : 'Data saved Successfully!'
+            })
+            setTimeout(function(){ window.location = '/';},1000);
+        });
     }
 
     render(){
@@ -137,6 +150,7 @@ export default class CreateFeedInfo extends Component{
                     <input type="text" className="form-control"
                     value={this.state.feedLocation}
                     onChange={this.onChangefeedLocation}
+                    required
                     />
                     </div>
                     <div className="form-group">
@@ -144,6 +158,7 @@ export default class CreateFeedInfo extends Component{
                     <input type="text" className="form-control"
                     value={this.state.foodType}
                     onChange={this.onChangefoodType}
+                    required
                     />
                     </div>
                     <div className="form-group">
@@ -151,21 +166,26 @@ export default class CreateFeedInfo extends Component{
                     <input type="text" className="form-control"
                     value={this.state.foodCategory}
                     onChange={this.onChangefoodCategory}
+                    required
                     />
                     </div>
                     <div className="form-group">
                     <label>Number of Ducks: </label>
-                    <input type="text" className="form-control"
+                    <input type="number" className="form-control"
                     value={this.state.numberOfDucks}
                     onChange={this.onChangenumberOfDucks}
+                    required
+                    min='0'
                     />
                     </div>
                     
                     <div className="form-group">
                     <label>Quantity(in grams): </label>
-                    <input type="text" className="form-control"
+                    <input type="number" className="form-control"
                     value={this.state.foodQuantity}
                     onChange={this.onChangefoodQuantity}
+                    required
+                    min='0'
                     />
                     </div>
 
@@ -173,6 +193,7 @@ export default class CreateFeedInfo extends Component{
                         <input type="submit" value="Log Feed Data" className="btn btn-primary"/>
 
                     </div>
+                    <div className="form-group">{this.state.successMessage}</div>
                       </form>
             </div>
         )

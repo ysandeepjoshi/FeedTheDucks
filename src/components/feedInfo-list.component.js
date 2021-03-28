@@ -76,6 +76,7 @@ export default class FeedInfoList extends Component{
                            <th>Category</th>
                            <th>Number of Ducks</th>
                            <th>Quantity(in grams):</th>
+                           <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
