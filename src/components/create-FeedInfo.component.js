@@ -15,6 +15,8 @@ export default class CreateFeedInfo extends Component{
         this.onChangefoodType = this.onChangefoodType.bind(this);
         this.onChangenumberOfDucks = this.onChangenumberOfDucks.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.scheduleAutoEntry = this.scheduleAutoEntry.bind(this);
+        this.deleteScheduleEntry = this.deleteScheduleEntry.bind(this);
 
         this.state = {
         username : '',    
@@ -66,7 +68,52 @@ export default class CreateFeedInfo extends Component{
         })
         
     }
+    deleteScheduleEntry(e){
+        e.preventDefault();     
+        const FeedInformation = {
+            username : this.state.username,
+            scheduled: true,
+            feedTime : this.state.feedTime,
+            feedLocation : this.state.feedLocation,
+            foodType : this.state.foodType,
+            foodCategory : this.state.foodCategory,
+            numberOfDucks : this.state.numberOfDucks,
+            foodQuantity : this.state.foodQuantity,
+        }
+        console.log(FeedInformation);
+        axios.post('https://duck-feed-be.herokuapp.com/schedules/delete',FeedInformation)
+        .then(res => {
+            console.log(res.data)
+            this.setState({
+                successMessage : 'Scheduler deleted Successfully!'
+            })
+            setTimeout(function(){ window.location = '/';},1000);
+        });
+    }
 
+    scheduleAutoEntry(e){
+        
+        e.preventDefault();     
+        const FeedInformation = {
+            username : this.state.username,
+            scheduled: true,
+            feedTime : this.state.feedTime,
+            feedLocation : this.state.feedLocation,
+            foodType : this.state.foodType,
+            foodCategory : this.state.foodCategory,
+            numberOfDucks : this.state.numberOfDucks,
+            foodQuantity : this.state.foodQuantity,
+        }
+        console.log(FeedInformation);
+        axios.post('https://duck-feed-be.herokuapp.com/schedules/add',FeedInformation)
+        .then(res => {
+            console.log(res.data)
+            this.setState({
+                successMessage : 'Scheduler updated Successfully!'
+            })
+            setTimeout(function(){ window.location = '/';},1000);
+        });
+    }
     onChangeUsername(e){
         this.setState({
             username : e.target.value,
@@ -217,7 +264,8 @@ export default class CreateFeedInfo extends Component{
 
                     <div className="form-group">
                         <input type="submit" value="Log Feed Data" className="btn btn-primary"/>
-                        <input type="button"  value={this.state.scheduled? "Stop Auto Data Entry":"Automate This"}  className="btn btn-primary float-right"/>
+                        <input type="submit"  value={this.state.scheduled? "Edit Auto Data Entry":"Automate This"} onClick={this.scheduleAutoEntry}  className="btn btn-primary float-right"/>
+                        <input type="submit"  hidden ={!this.state.scheduled} value={"Stop Auto Data Entry"} onClick={this.scheduleAutoEntry}  className="btn btn-primary float-right"/>
 
                     </div>
                     <div className="form-group">{this.state.successMessage}</div>

@@ -62,6 +62,7 @@ export default class FeedInfoList extends Component{
     }
 
     deleteFeedInfo(id){
+        window.confirm("are you sure you want to delete this record?");
         axios.delete('https://duck-feed-be.herokuapp.com/feeddata/'+id)
         .then( res => {
             console.log(res.data)
