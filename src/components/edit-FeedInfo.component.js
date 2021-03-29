@@ -48,22 +48,39 @@ export default class EditFeedInfo extends Component{
         .catch(function(error){
             console.log(error);
         })
+
+        
+        //get the user and admin status        
+        let user = JSON.parse(sessionStorage.getItem('token'))?.user;
+        let admin = JSON.parse(sessionStorage.getItem('token'))?.admin;
+
         axios.get('https://duck-feed-be.herokuapp.com/users')
         .then(response =>{
             if(response.data.length>0){
+                if(admin){
+                    this.setState({
+                        users : response.data.map(user => user.username),
+                        username : response.data[0].username
+                    })
+                }else{
+                let filterData = response.data.filter((item)=>item.username===user);
                 this.setState({
-                    users : response.data.map(user => user.username),
+                    users : filterData.map(user => user.username),
+                    username : filterData[0].username
                 })
             }
+        }
         })
         
         axios.get('https://duck-feed-be.herokuapp.com/schedules')
         .then(response =>{
             if(response.data.length>0){
                 let filteredSchedule = response.data.filter((d)=>d.username === this.state.username);
+                if(filteredSchedule.length>0){
                 this.setState({
                     scheduled : filteredSchedule[0].scheduled
                 })
+            }
             }
         })
     }
