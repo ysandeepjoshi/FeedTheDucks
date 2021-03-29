@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useToken from './login/useToken';
+
 
 
 const FeedInfo = props =>(
@@ -29,10 +31,10 @@ export default class FeedInfoList extends Component{
 
         this.deleteFeedInfo =  this.deleteFeedInfo.bind(this);
         this.state = {feedinfo:[]};
-
     }
 
     componentDidMount(){
+        
         axios.get('https://duck-feed-be.herokuapp.com/feeddata')
         .then( response =>{
             this.setState({
@@ -44,9 +46,19 @@ export default class FeedInfoList extends Component{
         })
     }
     feedinformationList(){
+        let user = JSON.parse(sessionStorage.getItem('token'))?.user;
+        let admin = JSON.parse(sessionStorage.getItem('token'))?.admin;
+        if(admin){
         return this.state.feedinfo.map( currentFeedData =>{
             return <FeedInfo feedinfo={currentFeedData} deleteFeedInfo={this.deleteFeedInfo} key={currentFeedData._id}/>
         })
+         }
+         else{
+             let filterData = this.state.feedinfo.filter((item)=>item.username===user);
+            return filterData.map( currentFeedData =>{
+                return <FeedInfo feedinfo={currentFeedData} deleteFeedInfo={this.deleteFeedInfo} key={currentFeedData._id}/>
+            })
+         }
     }
 
     deleteFeedInfo(id){

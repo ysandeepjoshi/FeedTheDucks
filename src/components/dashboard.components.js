@@ -57,7 +57,7 @@ export default class DashBoardReporting extends Component{
     render(){
         return(
             <div>
-                <h3>Welcome to Dashboard Reporting</h3>
+                <h3>Welcome to Reporting Dashboard</h3>
                 <div className="ag-theme-balham"
                 style={{
                     width:1100,

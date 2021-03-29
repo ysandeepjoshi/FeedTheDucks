@@ -16,10 +16,10 @@ export default class Navbar extends Component {
                     <Link to="/create" className = "nav-link">Create Feed Info</Link>
                     </li>
                     <li className="navbar-item">
-                    <Link to="/user" className = "nav-link">Create User</Link>
+                    <Link to="/user" className = "nav-link">Create User(Admin Only)</Link>
                     </li>
                     <li className="navbar-item">
-                    <Link to="/dashboard" className = "nav-link">Dashboard Reporting</Link>
+                    <Link to="/dashboard" className = "nav-link">Dashboard/Reporting(Admin Only)</Link>
                     </li>
                 </ul>
                 </div>
