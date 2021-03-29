@@ -99,7 +99,7 @@ export default class EditFeedInfo extends Component{
             foodQuantity : this.state.foodQuantity,
         }
         console.log(FeedInformation);
-        axios.post('localhost:5000/schedules/delete',FeedInformation)
+        axios.post('https://duck-feed-be.herokuapp.com/schedules/delete',FeedInformation)
         .then(res => {
             console.log(res.data)
             this.setState({
